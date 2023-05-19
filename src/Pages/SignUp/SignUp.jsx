@@ -1,10 +1,26 @@
-import React from 'react';
+import React, { useContext } from 'react';
 import HeroImg from '../../assets/images/login/login.svg';
 import { FcGoogle } from "react-icons/fc";
 import { Link } from 'react-router-dom';
+import { UserContext } from '../../Providers/Auth/AuthProvider';
 
 const SignUp = () => {
 
+    const { signUp } = useContext( UserContext );
+
+    const handleSignUp = ( e ) => {
+        e.preventDefault();
+
+        const email = e.target.email.value;
+        const password = e.target.password.value;
+        const confirmPassword = e.target.confirmPassword.value;
+
+        if (password === confirmPassword) {
+            signUp( email, password )
+                .then( result => console.log( result ) )
+                .catch( error => console.log( error ) );
+        }
+    };
 
 
     return (
@@ -14,7 +30,10 @@ const SignUp = () => {
                     <img src={ HeroImg } alt="figure" className='w-72' />
                 </figure>
                 <div className="card flex-shrink w-full max-w-sm h-min border border-opacity-50 rounded-lg ">
-                    <form className="card-body flex-grow-0 max-h-min ">
+                    <form
+                        className="card-body flex-grow-0 max-h-min"
+                        onSubmit={ handleSignUp }
+                    >
                         <div className="form-control">
                             <label className="label">
                                 <span className="label-text font-bold text-neutral">Email</span>
@@ -45,7 +64,7 @@ const SignUp = () => {
                             </label>
                             <input
                                 type="text"
-                                name='confirm-password'
+                                name='confirmPassword'
                                 placeholder="Confirm password"
                                 className="input input-bordered"
                                 required
@@ -53,7 +72,7 @@ const SignUp = () => {
                         </div>
 
                         <div className="form-control mt-6">
-                            <button className="btn btn-primary">Sign Up</button>
+                            <button type='submit' className="btn btn-primary">Sign Up</button>
                         </div>
 
                         <div className='flex flex-col gap-6 justify-center items-center mt-6'>

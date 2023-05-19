@@ -7,6 +7,7 @@ import { Helmet } from 'react-helmet';
 import Home from './Pages/Home/Home.jsx';
 import Login from './Pages/Login/Login.jsx';
 import SignUp from './Pages/SignUp/SignUp.jsx';
+import Checkout from './Pages/Checkout/Checkout.jsx';
 
 const routes = createBrowserRouter( [
   {
@@ -24,6 +25,11 @@ const routes = createBrowserRouter( [
       {
         path: '/signup',
         element: <SignUp />
+      },
+      {
+        path: '/checkout/:_id',
+        element: <Checkout />,
+        loader: ( { params }) => fetch(`http://192.168.0.179:5000/service/${params._id}`)
       }
     ]
   }
